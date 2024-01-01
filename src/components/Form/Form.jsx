@@ -1,31 +1,23 @@
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addName, addNumber } from 'store/action';
 
 export const FormAddContacts = ({ handleAddContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const name = useSelector(state => state.form.name);
+  const number = useSelector(state => state.form.number);
+
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const { name, value } = e.target;
-
     if (name === 'name') {
-      setName(value);
+      dispatch(addName(value));
     } else if (name === 'number') {
-      setNumber(value);
+      dispatch(addNumber(value));
     }
   };
   const handleSubmit = e => {
     e.preventDefault();
-    handleAddContact(
-      {
-        name,
-        number,
-      },
-      clean
-    );
-  };
-  const clean = () => {
-    setName('');
-    setNumber('');
+    handleAddContact();
   };
 
   return (
